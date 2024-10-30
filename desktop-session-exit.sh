@@ -1,41 +1,39 @@
 #!/usr/bin/env bash
-source $HOME/.local/bin/colors.mb4_.sh
 
-#/usr/local/bin/desktop-session-exit
+GREEN='\033[32m'
+YELLOW='\033[33m'
+LCYAN='\033[1;36m'
+NORMAL='\e[0m'
+
 SH="desktop-session-exit"
-echo "/usr/local/bin/$SH ..."
+echo -e "${GREEN}/usr/local/bin/$SH ...${NORMAL}"
 echo ''
 
-A1='1. -l | l | --logout     Logout of the current session'
-A2='2. -L | L | --lock       Lock the current session'
-A3="3. -H | H | --hibernate  Set the machine into hibernate"
-A4="4. -s | s | --shutdown   Shutdown your machine"
-A5="5. -S | S | --suspend    Set the machine into suspend"
-A6="6. -r | r | --reboot     Reboot your machine"
-A7="7. -R | R | --restart    Restart the session"
-#помощь
-#выход
+A1="${LCYAN}1${NORMAL}. ${YELLOW}Logout of the current session${NORMAL}	-l | l | --logout"
+A2="${LCYAN}2${NORMAL}. ${YELLOW}Lock the current session${NORMAL}		-L | L | --lock"
+A3="${LCYAN}3${NORMAL}. ${YELLOW}Set the machine into hibernate${NORMAL}	-H | H | --hibernate"
+A4="${LCYAN}4${NORMAL}. ${YELLOW}Shutdown your machine${NORMAL}		-s | s | --shutdown"
+A5="${LCYAN}5${NORMAL}. ${YELLOW}Set the machine into suspend${NORMAL}		-S | S | --suspend"
+A6="${LCYAN}6${NORMAL}. ${YELLOW}Reboot your machine${NORMAL}			-r | r | --reboot"
+A7="${LCYAN}7${NORMAL}. ${YELLOW}Restart the session${NORMAL}			-R | R | --restart"
+A8="${LCYAN}8${NORMAL}. ${YELLOW}script exit${NORMAL}				any key"
 
-ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7")
-
-#"2. -L | L | --lock       Lock the current session" "3. -H | H | --hibernate  Set the machine into hibernate" "4. -s | s | --shutdown   Shutdown your machine" "5. -S | S | --suspend    Set the machine into suspend" "6. -r | r | --reboot     Reboot your machine" "7. -R | R | --restart    Restart the session")
-
+ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7" "$A8")
 
 if command -v fzf >/dev/null 2>&1 ; then
-	echo "Выберете нужную опцию:"
+	echo "Select the desired option:"
 	CHOICE=$(printf "%s\n" "${ARR[@]}" | fzf --height 40% --reverse)
 	CHOICE=$(echo "$CHOICE" | cut -c 1)
 
 else
 	for i in "${!ARR[@]}"; do
-		echo "${ARR[i]}"
+		echo -e "${ARR[i]}"
 	done
 	echo ''
-	read -p "Введите номер, короткую опцию или длинню (Например: 1 | -l | l | --logout): " CHOICE
+	echo -e "${GREEN}Enter number, short option or long option (For example: 1 | -l | l | --logout):${NORMAL} "
+	read CHOICE
 fi
 
-#echo $CHOICE
-# Читаем выбор пользователя
 case $CHOICE in
 	1 | -l | --logout)
 		$SH -l
