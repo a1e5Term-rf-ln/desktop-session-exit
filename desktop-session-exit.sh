@@ -1,33 +1,41 @@
 #!/usr/bin/env bash
+source $HOME/.local/bin/colors.mb4_.sh
 
 #/usr/local/bin/desktop-session-exit
 SH="desktop-session-exit"
 echo "/usr/local/bin/$SH ..."
 echo ''
 
-A1='-l | l | --logout     Logout of the current session'
-A2='-L | L | --lock       Lock the current session'
-A3="-H | H | --hibernate  Set the machine into hibernate"
-A4="-s | s | --shutdown   Shutdown your machine"
-A5="-S | S | --suspend    Set the machine into suspend"
-A6="-r | r | --reboot     Reboot your machine"
-A7="-R | R | --restart    Restart the session"
+A1='1. -l | l | --logout     Logout of the current session'
+A2='2. -L | L | --lock       Lock the current session'
+A3="3. -H | H | --hibernate  Set the machine into hibernate"
+A4="4. -s | s | --shutdown   Shutdown your machine"
+A5="5. -S | S | --suspend    Set the machine into suspend"
+A6="6. -r | r | --reboot     Reboot your machine"
+A7="7. -R | R | --restart    Restart the session"
+#помощь
+#выход
 
 ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7")
 
 #"2. -L | L | --lock       Lock the current session" "3. -H | H | --hibernate  Set the machine into hibernate" "4. -s | s | --shutdown   Shutdown your machine" "5. -S | S | --suspend    Set the machine into suspend" "6. -r | r | --reboot     Reboot your machine" "7. -R | R | --restart    Restart the session")
 
-for i in "${!ARR[@]}"; do
-	echo "$((i + 1)). ${ARR[i]}"
-done
 
-#read a
+if command -v fzf >/dev/null 2>&1 ; then
+	echo "Выберете нужную опцию:"
+	CHOICE=$(printf "%s\n" "${ARR[@]}" | fzf --height 40% --reverse)
+	CHOICE=$(echo "$CHOICE" | cut -c 1)
 
-echo ''
+else
+	for i in "${!ARR[@]}"; do
+		echo "${ARR[i]}"
+	done
+	echo ''
+	read -p "Введите номер, короткую опцию или длинню (Например: 1 | -l | l | --logout): " CHOICE
+fi
 
+#echo $CHOICE
 # Читаем выбор пользователя
-read -p "Введите номер, короткую опцию или длинню (Например: 1 | -l | l | --logout): " CHOICE
-echo
 case $CHOICE in
 	1 | -l | --logout)
 		$SH -l
