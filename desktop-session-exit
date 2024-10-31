@@ -25,7 +25,7 @@ tui() {
 
 	if command -v fzf >/dev/null 2>&1 ; then
 		echo "Select the desired option:"
-		CHOICE=$(printf "%b\n" "${ARR[@]}" | fzf --ansi --height 40% --reverse)
+		CHOICE=$(printf "%b\n" "${ARR[@]}" | fzf --ansi --height 40% --reverse --cycle)
 		CHOICE=$(echo "$CHOICE" | cut -c 1)
 
 	else
@@ -101,15 +101,15 @@ main() {
 			tui
 			return
 			;;
-		#*)
-			#if [ "$DISPLAY" ]; then
-				#$desktop_session_exit_gui &
-				#exit
-			#else
-				#echo "$1 Not an option"
-				#help;
-			#fi
-			#;;
+		*)
+			if [ "$DISPLAY" ]; then
+				$desktop_session_exit_gui &
+				exit
+			else
+				echo "$1 Not an option"
+				help;
+			fi
+			;;
 	esac
 	}
 
