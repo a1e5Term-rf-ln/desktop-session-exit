@@ -9,15 +9,25 @@ tui() {
 	NORMAL='\e[0m'
 
 	echo ''
+	
+	OPTION_1="-l | l | --logout"
+	OPTION_2="-L | L | --lock"
+	OPTION_3="-H | H | --hibernate"
+	OPTION_4="-s | s | --shutdown"
+	OPTION_5="-S | S | --suspend"
+	OPTION_6="-r | r | --reboot"
+	OPTION_7="-R | R | --restart"
+	OPTION_8="-h | h | --help"
+	
 
-	A1="${LCYAN}1${NORMAL}. ${YELLOW}Logout of the current session${NORMAL}	-l | l | --logout"
-	A2="${LCYAN}2${NORMAL}. ${YELLOW}Lock the current session${NORMAL}		-L | L | --lock"
-	A3="${LCYAN}3${NORMAL}. ${YELLOW}Set the machine into hibernate${NORMAL}	-H | H | --hibernate"
-	A4="${LCYAN}4${NORMAL}. ${YELLOW}Shutdown your machine${NORMAL}		-s | s | --shutdown"
-	A5="${LCYAN}5${NORMAL}. ${YELLOW}Set the machine into suspend${NORMAL}		-S | S | --suspend"
-	A6="${LCYAN}6${NORMAL}. ${YELLOW}Reboot your machine${NORMAL}			-r | r | --reboot"
-	A7="${LCYAN}7${NORMAL}. ${YELLOW}Restart the session${NORMAL}			-R | R | --restart"
-	A8="${LCYAN}8${NORMAL}. ${YELLOW}help${NORMAL}					-h | h | --help"
+	A1="${LCYAN}1${NORMAL}. ${YELLOW}Logout of the current session${NORMAL}	${OPTION_1}"
+	A2="${LCYAN}2${NORMAL}. ${YELLOW}Lock the current session${NORMAL}		${OPTION_2}"
+	A3="${LCYAN}3${NORMAL}. ${YELLOW}Set the machine into hibernate${NORMAL}	${OPTION_3}"
+	A4="${LCYAN}4${NORMAL}. ${YELLOW}Shutdown your machine${NORMAL}		${OPTION_4}"
+	A5="${LCYAN}5${NORMAL}. ${YELLOW}Set the machine into suspend${NORMAL}		${OPTION_5}"
+	A6="${LCYAN}6${NORMAL}. ${YELLOW}Reboot your machine${NORMAL}			${OPTION_6}"
+	A7="${LCYAN}7${NORMAL}. ${YELLOW}Restart the session${NORMAL}			${OPTION_7}"
+	A8="${LCYAN}8${NORMAL}. ${YELLOW}help${NORMAL}					${OPTION_8}"
 	A9="${LCYAN}9${NORMAL}. ${YELLOW}script exit${NORMAL}				any key"
 
 	ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7" "$A8" "$A9")
@@ -41,13 +51,14 @@ tui() {
 	
 help() {
     echo "Usage:"
-    echo "-l | --logout     Logout of the current session";
-    echo "-L | --lock       Lock the current session";
-    echo "-H | --hibernate  Set the machine into hibernate";
-    echo "-s | --shutdown   Shutdown your machine";
-    echo "-S | --suspend    Set the machine into suspend";
-    echo "-r | --reboot     Reboot your machine";
-    echo "-R | --restart    Restart the session";
+    echo "${OPTION_1}     Logout of the current session";
+    echo "${OPTION_2}       Lock the current session";
+    echo "${OPTION_3}  Set the machine into hibernate";
+    echo "${OPTION_4}   Shutdown your machine";
+    echo "${OPTION_5}    Set the machine into suspend";
+    echo "${OPTION_6}     Reboot your machine";
+    echo "${OPTION_7}    Restart the session";
+    echo "${OPTION_8}       help";
     }
     
 main() {
