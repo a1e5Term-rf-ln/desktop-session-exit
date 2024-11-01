@@ -2,6 +2,15 @@
 #exit  antix bash backend
 . /usr/local/lib/desktop-session/desktop-session-file-locations.sh
 
+OPTION_1="-l | l | --logout"
+OPTION_2="-L | L | --lock"
+OPTION_3="-H | H | --hibernate"
+OPTION_4="-s | s | --shutdown"
+OPTION_5="-S | S | --suspend"
+OPTION_6="-r | r | --reboot"
+OPTION_7="-R | R | --restart"
+OPTION_8="-h | h | --help"
+
 tui() {
 	GREEN='\033[32m'
 	YELLOW='\033[33m'
@@ -10,35 +19,38 @@ tui() {
 
 	echo ''
 	
-	OPTION_1="-l | l | --logout"
-	OPTION_2="-L | L | --lock"
-	OPTION_3="-H | H | --hibernate"
-	OPTION_4="-s | s | --shutdown"
-	OPTION_5="-S | S | --suspend"
-	OPTION_6="-r | r | --reboot"
-	OPTION_7="-R | R | --restart"
-	OPTION_8="-h | h | --help"
-	
-	A1="${LCYAN}1${NORMAL}. ${YELLOW}Logout of the current session${NORMAL}	${OPTION_1}"
-	A2="${LCYAN}2${NORMAL}. ${YELLOW}Lock the current session${NORMAL}		${OPTION_2}"
-	A3="${LCYAN}3${NORMAL}. ${YELLOW}Set the machine into hibernate${NORMAL}	${OPTION_3}"
-	A4="${LCYAN}4${NORMAL}. ${YELLOW}Shutdown your machine${NORMAL}		${OPTION_4}"
-	A5="${LCYAN}5${NORMAL}. ${YELLOW}Set the machine into suspend${NORMAL}		${OPTION_5}"
-	A6="${LCYAN}6${NORMAL}. ${YELLOW}Reboot your machine${NORMAL}			${OPTION_6}"
-	A7="${LCYAN}7${NORMAL}. ${YELLOW}Restart the session${NORMAL}			${OPTION_7}"
-	A8="${LCYAN}8${NORMAL}. ${YELLOW}help${NORMAL}					${OPTION_8}"
-	A9="${LCYAN}9${NORMAL}. ${YELLOW}script exit${NORMAL}				any key"
+	#A1="${LCYAN}1${NORMAL}. ${YELLOW}Logout of the current session${NORMAL}	${OPTION_1}"
+	#A2="${LCYAN}2${NORMAL}. ${YELLOW}Lock the current session${NORMAL}		${OPTION_2}"
+	#A3="${LCYAN}3${NORMAL}. ${YELLOW}Set the machine into hibernate${NORMAL}	${OPTION_3}"
+	#A4="${LCYAN}4${NORMAL}. ${YELLOW}Shutdown your machine${NORMAL}		${OPTION_4}"
+	#A5="${LCYAN}5${NORMAL}. ${YELLOW}Set the machine into suspend${NORMAL}		${OPTION_5}"
+	#A6="${LCYAN}6${NORMAL}. ${YELLOW}Reboot your machine${NORMAL}			${OPTION_6}"
+	#A7="${LCYAN}7${NORMAL}. ${YELLOW}Restart the session${NORMAL}			${OPTION_7}"
+	#A8="${LCYAN}8${NORMAL}. ${YELLOW}help${NORMAL}					${OPTION_8}"
+	#A9="${LCYAN}9${NORMAL}. ${YELLOW}script exit${NORMAL}				any key"
+
+	A1="${YELLOW}Logout of the current session${NORMAL}	${OPTION_1}"
+	A2="${YELLOW}Lock the current session${NORMAL}		${OPTION_2}"
+	A3="${YELLOW}Set the machine into hibernate${NORMAL}	${OPTION_3}"
+	A4="${YELLOW}Shutdown your machine${NORMAL}		${OPTION_4}"
+	A5="${YELLOW}Set the machine into suspend${NORMAL}		${OPTION_5}"
+	A6="${YELLOW}Reboot your machine${NORMAL}			${OPTION_6}"
+	A7="${YELLOW}Restart the session${NORMAL}			${OPTION_7}"
+	A8="${YELLOW}help${NORMAL}					${OPTION_8}"
+	A9="${YELLOW}script exit${NORMAL}				any key"
 
 	ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7" "$A8" "$A9")
 
 	if command -v fzf >/dev/null 2>&1 ; then
 		echo "Select the desired option:"
-		CHOICE=$(printf "%b\n" "${ARR[@]}" | fzf --ansi --height 40% --reverse --cycle)
+		#CHOICE=$(printf "%b\n" "${ARR[@]}" | fzf --ansi --height 40% --reverse --cycle)
+		CHOICE=$(printf "%b\n" "${ARR[@]}" | awk '{print NR ": " $0}' | fzf --ansi --height 40% --reverse --cycle)
 		CHOICE=$(echo "$CHOICE" | cut -c 1)
 
 	else
 		for i in "${!ARR[@]}"; do
-			echo -e "${ARR[i]}"
+			#echo -e "${ARR[i]}"
+			echo -e "$((i + 1)). ${ARR[i]}"
 		done
 		echo ''
 		echo -e "${GREEN}Enter number, short option or long option (For example: 1 | -l | l | --logout):${NORMAL} "
