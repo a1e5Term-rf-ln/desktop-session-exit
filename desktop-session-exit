@@ -17,9 +17,10 @@ tui() {
 	A5="${LCYAN}5${NORMAL}. ${YELLOW}Set the machine into suspend${NORMAL}		-S | S | --suspend"
 	A6="${LCYAN}6${NORMAL}. ${YELLOW}Reboot your machine${NORMAL}			-r | r | --reboot"
 	A7="${LCYAN}7${NORMAL}. ${YELLOW}Restart the session${NORMAL}			-R | R | --restart"
-	A8="${LCYAN}8${NORMAL}. ${YELLOW}script exit${NORMAL}				any key"
+	A8="${LCYAN}8${NORMAL}. ${YELLOW}help${NORMAL}					-h | h | --help"
+	A9="${LCYAN}9${NORMAL}. ${YELLOW}script exit${NORMAL}				any key"
 
-	ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7" "$A8")
+	ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7" "$A8" "$A9")
 
 	if command -v fzf >/dev/null 2>&1 ; then
 		echo "Select the desired option:"
@@ -88,11 +89,11 @@ main() {
 		7 | -R | --Restart)
 			$desktop_session_restart
 			;;
-		8)
-			exit
-			;;
-		-h | --help)
+		8 | -h | --help)
 			help
+			;;
+		9)
+			exit
 			;;
 		-t | --tui)
 			tui
