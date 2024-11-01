@@ -2,43 +2,63 @@
 #exit  antix bash backend
 . /usr/local/lib/desktop-session/desktop-session-file-locations.sh
 
-OPTION_1="-l | l | --logout"
-OPTION_2="-L | L | --lock"
-OPTION_3="-H | H | --hibernate"
-OPTION_4="-s | s | --shutdown"
-OPTION_5="-S | S | --suspend"
-OPTION_6="-r | r | --reboot"
-OPTION_7="-R | R | --restart"
-OPTION_8="-h | h | --help"
+declare -A OPTION
+OPTION[1]="-l | l | --logout"
+OPTION[2]="-L | L | --lock"
+OPTION[3]="-H | H | --hibernate"
+OPTION[4]="-s | s | --shutdown"
+OPTION[5]="-S | S | --suspend"
+OPTION[6]="-r | r | --reboot"
+OPTION[7]="-R | R | --restart"
+OPTION[8]="-h | h | --help"
+OPTION[9]="any key"
+
+declare -A TXT
+TXT[1]="Logout of the current session"
+TXT[2]="Lock the current session"
+TXT[3]="Set the machine into hibernate"
+TXT[4]="Shutdown your machine"
+TXT[5]="Set the machine into suspend"
+TXT[6]="Reboot your machine"
+TXT[7]="Restart the session"
+TXT[8]="help"
+TXT[9]="script exit"
 
 tui() {
 	GREEN='\033[32m'
-	YELLOW='\033[33m'
+	BLUE='\033[01;34m'
+	YELLOW='\e[1;33m'
 	LCYAN='\033[1;36m'
 	NORMAL='\e[0m'
 
 	echo ''
 
-	A1="${YELLOW}Logout of the current session${NORMAL}	${OPTION_1}"
-	A2="${YELLOW}Lock the current session${NORMAL}		${OPTION_2}"
-	A3="${YELLOW}Set the machine into hibernate${NORMAL}	${OPTION_3}"
-	A4="${YELLOW}Shutdown your machine${NORMAL}		${OPTION_4}"
-	A5="${YELLOW}Set the machine into suspend${NORMAL}		${OPTION_5}"
-	A6="${YELLOW}Reboot your machine${NORMAL}			${OPTION_6}"
-	A7="${YELLOW}Restart the session${NORMAL}			${OPTION_7}"
-	A8="${YELLOW}help${NORMAL}					${OPTION_8}"
-	A9="${YELLOW}script exit${NORMAL}				any key"
+	A1="${YELLOW}${TXT[1]}${NORMAL}	${OPTION[1]}"
+	A2="${YELLOW}${TXT[2]}${NORMAL}		${OPTION[2]}"
+	A3="${YELLOW}${TXT[3]}${NORMAL}	${OPTION[3]}"
+	A4="${YELLOW}${TXT[4]}${NORMAL}		${OPTION[4]}"
+	A5="${YELLOW}${TXT[5]}${NORMAL}		${OPTION[5]}"
+	A6="${YELLOW}${TXT[6]}${NORMAL}			${OPTION[6]}"
+	A7="${YELLOW}${TXT[7]}${NORMAL}			${OPTION[7]}"
+	A8="${YELLOW}${TXT[8]${NORMAL}					${OPTION[8]}"
+	A9="${YELLOW}${TXT[9]${NORMAL}				any key"
 
 	ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7" "$A8" "$A9")
-
+#потом fzf править
 	if command -v fzf >/dev/null 2>&1 ; then
 		echo "Select the desired option:"
-		CHOICE=$(printf "%b\n" "${ARR[@]}" | awk '{print NR ": " $0}' | fzf --ansi --height 40% --reverse --cycle)
+		#CHOICE=$(printf "%b\n" "${ARR[@]}" | awk '{print NR ": " $0}' | fzf --ansi --height 40% --reverse --cycle)
+		
+		CHOICE=$(printf "%b %-31b %b\n" "${LCYAN}$((i + 1)).${NORMAL}" "${YELLOW}${OPTION[$((i + 1))]}${NORMAL}" "${LCYAN}${TXT[$((i + 1))]}${NORMAL}" | awk '{print NR ": " $0}' | fzf --ansi --height 40% --reverse --cycle)
+		          
+		          
 		CHOICE=$(echo "$CHOICE" | cut -c 1)
 
 	else
 		for i in "${!ARR[@]}"; do
-			echo -e "$((i + 1)). ${ARR[i]}"
+			#echo -e "$((i + 1)). ${ARR[i]}"
+			printf "%b %-31b %b\n" "${LCYAN}$((i + 1)).${NORMAL}" "${YELLOW}${OPTION[$((i + 1))]}${NORMAL}" "${LCYAN}${TXT[$((i + 1))]}${NORMAL}"
+
 		done
 		echo ''
 		echo -e "${GREEN}Enter number, short option or long option (For example: 1 | -l | l | --logout):${NORMAL} "
@@ -50,14 +70,14 @@ tui() {
 	
 help() {
     echo "Usage:"
-    echo "${OPTION_1}     Logout of the current session";
-    echo "${OPTION_2}       Lock the current session";
-    echo "${OPTION_3}  Set the machine into hibernate";
-    echo "${OPTION_4}   Shutdown your machine";
-    echo "${OPTION_5}    Set the machine into suspend";
-    echo "${OPTION_6}     Reboot your machine";
-    echo "${OPTION_7}    Restart the session";
-    echo "${OPTION_8}       help";
+	printf "%-30s %s\n" "${OPTION[1]}" "${TXT[1]}"
+	printf "%-30s %s\n" "${OPTION[2]}" "${TXT[2]}"
+	printf "%-30s %s\n" "${OPTION[3]}" "${TXT[3]}"
+	printf "%-30s %s\n" "${OPTION[4]}" "${TXT[4]}"
+	printf "%-30s %s\n" "${OPTION[5]}" "${TXT[5]}"
+	printf "%-30s %s\n" "${OPTION[6]}" "${TXT[6]}"
+	printf "%-30s %s\n" "${OPTION[7]}" "${TXT[7]}"
+	printf "%-30s %s\n" "${OPTION[8]}" "${TXT[8]}"
     }
     
 main() {
