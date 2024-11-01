@@ -8,8 +8,6 @@ tui() {
 	LCYAN='\033[1;36m'
 	NORMAL='\e[0m'
 
-	#SH="desktop-session-exit"
-	#echo -e "${GREEN}/usr/local/bin/$SH ...${NORMAL}"
 	echo ''
 
 	A1="${LCYAN}1${NORMAL}. ${YELLOW}Logout of the current session${NORMAL}	-l | l | --logout"
