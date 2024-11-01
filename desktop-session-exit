@@ -19,7 +19,6 @@ tui() {
 	OPTION_7="-R | R | --restart"
 	OPTION_8="-h | h | --help"
 	
-
 	A1="${LCYAN}1${NORMAL}. ${YELLOW}Logout of the current session${NORMAL}	${OPTION_1}"
 	A2="${LCYAN}2${NORMAL}. ${YELLOW}Lock the current session${NORMAL}		${OPTION_2}"
 	A3="${LCYAN}3${NORMAL}. ${YELLOW}Set the machine into hibernate${NORMAL}	${OPTION_3}"
