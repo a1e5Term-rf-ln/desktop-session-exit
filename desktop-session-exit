@@ -3,26 +3,26 @@
 . /usr/local/lib/desktop-session/desktop-session-file-locations.sh
 
 declare -A OPTION
-OPTION[1]="-l | l | --logout"
-OPTION[2]="-L | L | --lock"
-OPTION[3]="-H | H | --hibernate"
-OPTION[4]="-s | s | --shutdown"
-OPTION[5]="-S | S | --suspend"
-OPTION[6]="-r | r | --reboot"
-OPTION[7]="-R | R | --restart"
-OPTION[8]="-h | h | --help"
-OPTION[9]="any key"
+OPTION[1]='-l | l | --logout'
+OPTION[2]='-L | L | --lock'
+OPTION[3]='-H | H | --hibernate'
+OPTION[4]='-s | s | --shutdown'
+OPTION[5]='-S | S | --suspend'
+OPTION[6]='-r | r | --reboot'
+OPTION[7]='-R | R | --restart'
+OPTION[8]='-h | h | --help'
+OPTION[9]='any key'
 
 declare -A TXT
-TXT[1]="Logout of the current session"
-TXT[2]="Lock the current session"
-TXT[3]="Set the machine into hibernate"
-TXT[4]="Shutdown your machine"
-TXT[5]="Set the machine into suspend"
-TXT[6]="Reboot your machine"
-TXT[7]="Restart the session"
-TXT[8]="help"
-TXT[9]="script exit"
+TXT[1]='Logout of the current session'
+TXT[2]='Lock the current session'
+TXT[3]='Set the machine into hibernate'
+TXT[4]='Shutdown your machine'
+TXT[5]='Set the machine into suspend'
+TXT[6]='Reboot your machine'
+TXT[7]='Restart the session'
+TXT[8]='help'
+TXT[9]='script exit'
 
 tui() {
 	GREEN='\033[32m'
@@ -33,25 +33,59 @@ tui() {
 
 	echo ''
 
-	A1="${YELLOW}${TXT[1]}${NORMAL}	${OPTION[1]}"
-	A2="${YELLOW}${TXT[2]}${NORMAL}		${OPTION[2]}"
-	A3="${YELLOW}${TXT[3]}${NORMAL}	${OPTION[3]}"
-	A4="${YELLOW}${TXT[4]}${NORMAL}		${OPTION[4]}"
-	A5="${YELLOW}${TXT[5]}${NORMAL}		${OPTION[5]}"
-	A6="${YELLOW}${TXT[6]}${NORMAL}			${OPTION[6]}"
-	A7="${YELLOW}${TXT[7]}${NORMAL}			${OPTION[7]}"
-	A8="${YELLOW}${TXT[8]${NORMAL}					${OPTION[8]}"
-	A9="${YELLOW}${TXT[9]${NORMAL}				any key"
+	#A1="${YELLOW}${TXT[1]}${NORMAL}	${OPTION[1]}"
+	#A2="${YELLOW}${TXT[2]}${NORMAL}		${OPTION[2]}"
+	#A3="${YELLOW}${TXT[3]}${NORMAL}	${OPTION[3]}"
+	#A4="${YELLOW}${TXT[4]}${NORMAL}		${OPTION[4]}"
+	#A5="${YELLOW}${TXT[5]}${NORMAL}		${OPTION[5]}"
+	#A6="${YELLOW}${TXT[6]}${NORMAL}			${OPTION[6]}"
+	#A7="${YELLOW}${TXT[7]}${NORMAL}			${OPTION[7]}"
+	#A8="${YELLOW}${TXT[8]${NORMAL}					${OPTION[8]}"
+	#A9="${YELLOW}${TXT[9]${NORMAL}				any key"
 
-	ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7" "$A8" "$A9")
+	#ARR=("$A1" "$A2" "$A3" "$A4" "$A5" "$A6" "$A7" "$A8" "$A9")
+	
+	list=()
+
+	#echo ""
+	#echo "${#TXT[@]}"
+	#echo ""
+	
+#exit
+		
 #потом fzf править
 	if command -v fzf >/dev/null 2>&1 ; then
 		echo "Select the desired option:"
 		#CHOICE=$(printf "%b\n" "${ARR[@]}" | awk '{print NR ": " $0}' | fzf --ansi --height 40% --reverse --cycle)
 		
-		CHOICE=$(printf "%b %-31b %b\n" "${LCYAN}$((i + 1)).${NORMAL}" "${YELLOW}${OPTION[$((i + 1))]}${NORMAL}" "${LCYAN}${TXT[$((i + 1))]}${NORMAL}" | awk '{print NR ": " $0}' | fzf --ansi --height 40% --reverse --cycle)
-		          
-		          
+		#CHOICE=$(printf "%b %-31b %b\n" "${LCYAN}$((i + 1)).${NORMAL}" "${YELLOW}${OPTION[$((i + 1))]}${NORMAL}" "${LCYAN}${TXT[$((i + 1))]}${NORMAL}" | awk '{print NR ": " $0}' | fzf --ansi --height 40% --reverse --cycle)
+		
+			#Флаг --height в fzf задает высоту окна выбора, которое отображается в терминале. Когда вы указываете --height 40%, это означает, что высота окна fzf будет составлять 40% от высоты терминала, в котором вы его запускаете.
+			#Пример использования:
+
+				#Если ваш терминал имеет высоту 100 строк, то fzf --height 40% создаст окно высотой 40 строк.
+				#Это позволяет вам контролировать, сколько места в терминале будет занимать интерфейс fzf, что может быть полезно, если вы хотите оставить место для других команд или вывода.
+
+			#Другие варианты:
+
+			#Вы также можете указать высоту в абсолютных значениях, например:
+
+				#--height 20 — высота окна будет 20 строк.
+				#--height 50% — высота окна будет 50% от высоты терминала.
+
+
+		#for ((i=0; i<${#TXT[@]}; i++)); do
+			#list+=("${LCYAN}$((i + 1)).${NORMAL} ${YELLOW}${OPTION[$i]}${NORMAL} ${LCYAN}${TXT[$i]}${NORMAL}")
+		#done
+		
+		for ((i=1; i<=${#TXT[@]}; i++)); do
+			formatted_line=$(printf "%b %-31b %b\n" "${LCYAN}$((i)).${NORMAL}" "${YELLOW}${OPTION[$i]}${NORMAL}" "${LCYAN}${TXT[$i]}${NORMAL}")
+			list+=("$formatted_line")
+		done
+
+		CHOICE=$(printf "%b\n" "${list[@]}" | fzf --ansi --reverse --cycle)
+		#CHOICE=$(printf "%s" "${list[@]}" | fzf)
+		
 		CHOICE=$(echo "$CHOICE" | cut -c 1)
 
 	else
