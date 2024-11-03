@@ -11,7 +11,7 @@ OPTION[5]='-S | S | --suspend'
 OPTION[6]='-r | r | --reboot'
 OPTION[7]='-R | R | --restart'
 OPTION[8]='-h | h | --help'
-OPTION[9]='any key'
+OPTION[9]='-e | e | --exit'
 
 declare -A TXT
 TXT[1]='Logout of the current session'
@@ -62,14 +62,10 @@ tui() {
 	
 help() {
     echo "Usage:"
-	printf "%-30s %s\n" "${OPTION[1]}" "${TXT[1]}"
-	printf "%-30s %s\n" "${OPTION[2]}" "${TXT[2]}"
-	printf "%-30s %s\n" "${OPTION[3]}" "${TXT[3]}"
-	printf "%-30s %s\n" "${OPTION[4]}" "${TXT[4]}"
-	printf "%-30s %s\n" "${OPTION[5]}" "${TXT[5]}"
-	printf "%-30s %s\n" "${OPTION[6]}" "${TXT[6]}"
-	printf "%-30s %s\n" "${OPTION[7]}" "${TXT[7]}"
-	printf "%-30s %s\n" "${OPTION[8]}" "${TXT[8]}"
+	for i in {1..8}; do
+		printf "%-30s %s\n" "${OPTION[$i]}" "${TXT[$i]}"
+	done
+
     }
     
 main() {
@@ -78,16 +74,16 @@ main() {
 	fi
 
 	case $CHOICE in
-		1 | -l | --logout)
+		1 | -l | l | --logout)
 			$desktop_session_logout
 			;;
-		2 | -L | --lock)
+		2 | -L | L | --lock)
 			xlock
 			;;
-		3 | -H |--hibernate)
+		3 | -H | H |--hibernate)
 		    sudo pm-hibernate
 		    ;;
-		4 | -s | --shutdown)
+		4 | -s | s | --shutdown)
 			if [ -e /etc/live/config/save-persist -o -e /live/config/persist-save.conf ] && which persist-config &> /dev/null; then
 				sudo persist-config --shutdown --command poweroff
 			else
@@ -96,10 +92,10 @@ main() {
 				sudo poweroff
 			fi
 			;;
-		5 | -S | --suspend)
+		5 | -S | S | --suspend)
 			sudo pm-suspend
 			;;
-		6 | -r | --reboot)
+		6 | -r | r | --reboot)
 			if [ -e /etc/live/config/save-persist -o -e /live/config/persist-save.conf ] && which persist-config &> /dev/null; then
 				sudo persist-config --shutdown --command reboot
 			else
@@ -108,16 +104,16 @@ main() {
 				sudo reboot
 			fi
 			;;
-		7 | -R | --Restart)
+		7 | -R | R | --Restart)
 			$desktop_session_restart
 			;;
-		8 | -h | --help)
+		8 | -h | h | --help)
 			help
 			;;
-		9)
+		9 | -e | e | --exit)
 			exit
 			;;
-		-t | --tui)
+		-t | t | --tui)
 			tui
 			return
 			;;
